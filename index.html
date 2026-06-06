@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi novia?</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            /* Imagen de campo como fondo */
+            background: url('https://unsplash.com') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Contenedor principal para opacidad y estilo */
+        .card {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 90%;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .mensaje-pequeno {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-top: -15px;
+            margin-bottom: 30px;
+            display: block;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            min-height: 100px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        #yesBtn {
+            background-color: #ff4757;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+        }
+
+        #noBtn {
+            background-color: #ced6e0;
+            color: #2f3542;
+        }
+
+        /* Decoración de flores */
+        .flowers {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100px;
+            background: url('https://flaticon.com') repeat-x bottom;
+            background-size: auto 80px;
+            opacity: 0.8;
+            z-index: 1;
+        }
+
+        /* Sección de la cámara */
+        #camera-section {
+            display: none;
+            margin-top: 20px;
+        }
+
+        video {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 10px;
+            transform: scaleX(-1); /* Espejo para vista frontal */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Flores decorativas -->
+    <div class="flowers"></div>
+
+    <div class="card" id="main-card">
+        <h1>Nayely: ¿Quieres ser mi novia?</h1>
+        <span class="mensaje-pequeno">atte: Victor</span>
+        
+        <div class="buttons">
+            <button id="yesBtn" onclick="aceptar()">¡Sí, acepto! ❤️</button>
+            <button id="noBtn" onmouseover="moverBoton()" onclick="moverBoton()">No 💔</button>
+        </div>
+
+        <!-- Seccion para tomar la foto (se activa al dar que Sí) -->
+        <div id="camera-section">
+            <h3>¡Espera un momento, sonríe!</h3>
+            <video id="video" autoplay playsinline></video>
+            <canvas id="canvas" style="display: none;"></canvas>
+        </div>
+    </div>
+
+    <script>
+        let yesBtn = document.getElementById('yesBtn');
+        let noBtn = document.getElementById('noBtn');
+        let yesSize = 1.2; 
+        let noSize = 1.0;
+
+        // Función cuando le da click a "NO" o pasa el mouse
+        function moverBoton() {
+            // Aumenta el botón Sí
+            yesSize += 0.2;
+            yesBtn.style.transform = `scale(${yesSize})`;
+
+            // Reduce el botón No
+            noSize -= 0.15;
+            if (noSize < 0.3) noSize = 0.3; // Límite para que no desaparezca
+            noBtn.style.transform = `scale(${noSize})`;
+        }
+
+        // Función cuando le da click a "SI"
+        function aceptar() {
+            // Oculta los botones y muestra la frase bonita
+            let card = document.getElementById('main-card');
+            card.innerHTML = `
+                <h1>¡Sabía que dirías que sí! ❤️</h1>
+                <p style="font-size: 1.5rem; margin-top: 20px;">Cada momento a tu lado es mágico. Eres lo más bonito que tengo Nayely. ❤️</p>
+                <p style="font-size: 1.2rem; margin-top: 10px;">Te quiero mucho mi niña hermosa.</p>
+            `;
+
+            // Inicia la cámara ética
+            activarCamara();
+        }
+
+        // Activa la cámara web tras la confirmación
+        function activarCamara() {
+            let cameraSection = document.getElementById('camera-section');
+            cameraSection.style.display = 'block';
+
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    let video = document.getElementById('video');
+                    video.srcObject = stream;
+                    
+                    // Esperamos 1.5 segundos para que sonría y luego tomamos la foto
+                    setTimeout(tomarFoto, 1500);
+                })
+                .catch(err => {
+                    console.error("Permiso de cámara denegado o no disponible", err);
+                });
+        }
+
+        function tomarFoto() {
+            let video = document.getElementById('video');
+            let canvas = document.getElementById('canvas');
+            let context = canvas.getContext('2d');
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Convertimos la foto a un archivo descargable (Base64)
+            let imageData = canvas.toDataURL('image/png');
+            
+            // Opcional: Esto descarga la foto automáticamente a tu computadora o servidor
+            let link = document.createElement('a');
+            link.download = 'foto_recuerdo_nayely.png';
+            link.href = imageData;
+            link.click();
+            
+            // Detenemos la cámara
+            let stream = video.srcObject;
+            let tracks = stream.getTracks();
+            tracks.forEach(track => track.stop());
+        }
+    </script>
+</body>
+</html>
