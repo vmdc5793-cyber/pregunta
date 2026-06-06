@@ -1,202 +1,462 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¿Quieres ser mi novia?</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            /* Imagen de campo como fondo */
-            background: url('https://unsplash.com') no-repeat center center fixed;
-            background-size: cover;
-            font-family: 'Arial', sans-serif;
-            color: #fff;
-            text-align: center;
-            overflow: hidden;
-            position: relative;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nayely ❤️</title>
 
-        /* Contenedor principal para opacidad y estilo */
-        .card {
-            background: rgba(0, 0, 0, 0.6);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            max-width: 90%;
-            z-index: 2;
-        }
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-        }
+<style>
+/* ==========================
+   ESTILOS GENERALES
+========================== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        .mensaje-pequeno {
-            font-size: 1.2rem;
-            font-style: italic;
-            margin-top: -15px;
-            margin-bottom: 30px;
-            display: block;
-        }
+body{
+    height:100vh;
+    overflow:hidden;
+    font-family:'Poppins', sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    background:url('https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?q=80&w=2070&auto=format&fit=crop') center center/cover no-repeat;
+}
 
-        .buttons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            min-height: 100px;
-        }
+/* Oscurecer ligeramente el fondo */
+body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.25);
+}
 
-        button {
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
+/* ==========================
+   TARJETA CENTRAL
+========================== */
+.card{
+    position:relative;
+    z-index:10;
+    width:90%;
+    max-width:700px;
+    text-align:center;
+    padding:35px;
+    border-radius:25px;
+    backdrop-filter:blur(12px);
+    background:rgba(255,255,255,0.18);
+    border:1px solid rgba(255,255,255,0.3);
+    box-shadow:0 10px 40px rgba(0,0,0,.25);
+    color:white;
+    animation:fadeIn 1.2s ease;
+}
 
-        #yesBtn {
-            background-color: #ff4757;
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
-        }
+.title{
+    font-family:'Great Vibes', cursive;
+    font-size:4rem;
+    color:#ffd7ea;
+    margin-bottom:10px;
+}
 
-        #noBtn {
-            background-color: #ced6e0;
-            color: #2f3542;
-        }
+.question{
+    font-size:2rem;
+    font-weight:600;
+    margin-bottom:10px;
+}
 
-        /* Decoración de flores */
-        .flowers {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 100px;
-            background: url('https://flaticon.com') repeat-x bottom;
-            background-size: auto 80px;
-            opacity: 0.8;
-            z-index: 1;
-        }
+.signature{
+    font-size:1.1rem;
+    color:#fff4f7;
+    margin-bottom:25px;
+}
 
-        /* Sección de la cámara */
-        #camera-section {
-            display: none;
-            margin-top: 20px;
-        }
+.phrase{
+    font-size:1rem;
+    line-height:1.7;
+    margin-bottom:30px;
+    color:#fff;
+}
 
-        video {
-            width: 100%;
-            max-width: 300px;
-            border-radius: 10px;
-            transform: scaleX(-1); /* Espejo para vista frontal */
-        }
-    </style>
+/* ==========================
+   BOTONES
+========================== */
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+    position:relative;
+}
+
+button{
+    border:none;
+    cursor:pointer;
+    padding:14px 28px;
+    border-radius:50px;
+    font-size:1.1rem;
+    transition:.35s;
+    font-weight:600;
+}
+
+#yesBtn{
+    background:linear-gradient(45deg,#ff4d88,#ff85a2);
+    color:white;
+    box-shadow:0 5px 20px rgba(255,105,180,.4);
+}
+
+#yesBtn:hover{
+    transform:translateY(-3px);
+}
+
+#noBtn{
+    background:white;
+    color:#d6336c;
+}
+
+#noBtn:hover{
+    transform:translateY(-3px);
+}
+
+.message{
+    margin-top:20px;
+    color:#fff8fb;
+    font-size:1.1rem;
+    min-height:30px;
+}
+
+/* ==========================
+   PÉTALOS
+========================== */
+.petal{
+    position:absolute;
+    top:-20px;
+    color:#ffd1dc;
+    font-size:18px;
+    animation:fall linear infinite;
+    pointer-events:none;
+}
+
+@keyframes fall{
+    from{
+        transform:translateY(-10vh) rotate(0deg);
+    }
+    to{
+        transform:translateY(110vh) rotate(360deg);
+    }
+}
+
+/* ==========================
+   CORAZONES
+========================== */
+.heart{
+    position:absolute;
+    color:#ff4d88;
+    font-size:25px;
+    animation:floatHeart 4s linear forwards;
+    pointer-events:none;
+}
+
+@keyframes floatHeart{
+    0%{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+    100%{
+        opacity:0;
+        transform:translateY(-600px) scale(2);
+    }
+}
+
+/* ==========================
+   CELEBRACIÓN
+========================== */
+.celebration{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:100;
+}
+
+.spark{
+    position:absolute;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    animation:spark 2s linear forwards;
+}
+
+@keyframes spark{
+    from{
+        opacity:1;
+        transform:translate(0,0);
+    }
+    to{
+        opacity:0;
+        transform:translate(var(--x),var(--y));
+    }
+}
+
+/* ==========================
+   ANIMACIONES
+========================== */
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+@media(max-width:768px){
+
+    .title{
+        font-size:3rem;
+    }
+
+    .question{
+        font-size:1.5rem;
+    }
+
+    button{
+        font-size:1rem;
+        padding:12px 22px;
+    }
+}
+</style>
 </head>
+
 <body>
 
-    <!-- Flores decorativas -->
-    <div class="flowers"></div>
+<div class="card">
 
-    <div class="card" id="main-card">
-        <h1>Nayely: ¿Quieres ser mi novia?</h1>
-        <span class="mensaje-pequeno">atte: Victor</span>
-        
-        <div class="buttons">
-            <button id="yesBtn" onclick="aceptar()">¡Sí, acepto! ❤️</button>
-            <button id="noBtn" onmouseover="moverBoton()" onclick="moverBoton()">No 💔</button>
-        </div>
+    <h1 class="title">Nayely ❤️</h1>
 
-        <!-- Seccion para tomar la foto (se activa al dar que Sí) -->
-        <div id="camera-section">
-            <h3>¡Espera un momento, sonríe!</h3>
-            <video id="video" autoplay playsinline></video>
-            <canvas id="canvas" style="display: none;"></canvas>
-        </div>
+    <div class="question">
+        ¿Quieres ser mi novia?
     </div>
 
-    <script>
-        let yesBtn = document.getElementById('yesBtn');
-        let noBtn = document.getElementById('noBtn');
-        let yesSize = 1.2; 
-        let noSize = 1.0;
+    <div class="signature">
+        Atte. Víctor
+    </div>
 
-        // Función cuando le da click a "NO" o pasa el mouse
-        function moverBoton() {
-            // Aumenta el botón Sí
-            yesSize += 0.2;
-            yesBtn.style.transform = `scale(${yesSize})`;
+    <div class="phrase">
+        Desde que llegaste a mi vida, cada día tiene un motivo especial para sonreír.
+        Me harías muy feliz si aceptaras compartir esta historia conmigo. ❤️
+    </div>
 
-            // Reduce el botón No
-            noSize -= 0.15;
-            if (noSize < 0.3) noSize = 0.3; // Límite para que no desaparezca
-            noBtn.style.transform = `scale(${noSize})`;
-        }
+    <div class="buttons">
+        <button id="yesBtn">Sí ❤️</button>
+        <button id="noBtn">No 💔</button>
+    </div>
 
-        // Función cuando le da click a "SI"
-        function aceptar() {
-            // Oculta los botones y muestra la frase bonita
-            let card = document.getElementById('main-card');
-            card.innerHTML = `
-                <h1>¡Sabía que dirías que sí! ❤️</h1>
-                <p style="font-size: 1.5rem; margin-top: 20px;">Cada momento a tu lado es mágico. Eres lo más bonito que tengo Nayely. ❤️</p>
-                <p style="font-size: 1.2rem; margin-top: 10px;">Te quiero mucho mi niña hermosa.</p>
-            `;
+    <div class="message" id="message"></div>
 
-            // Inicia la cámara ética
-            activarCamara();
-        }
+</div>
 
-        // Activa la cámara web tras la confirmación
-        function activarCamara() {
-            let cameraSection = document.getElementById('camera-section');
-            cameraSection.style.display = 'block';
+<div class="celebration" id="celebration"></div>
 
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then(stream => {
-                    let video = document.getElementById('video');
-                    video.srcObject = stream;
-                    
-                    // Esperamos 1.5 segundos para que sonría y luego tomamos la foto
-                    setTimeout(tomarFoto, 1500);
-                })
-                .catch(err => {
-                    console.error("Permiso de cámara denegado o no disponible", err);
-                });
-        }
+<script>
 
-        function tomarFoto() {
-            let video = document.getElementById('video');
-            let canvas = document.getElementById('canvas');
-            let context = canvas.getContext('2d');
+/* ==================================
+   FRASES ROMÁNTICAS
+================================== */
 
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+const phrases = [
+    "¿Estás segura? ❤️",
+    "Piénsalo una vez más 🥺",
+    "Prometo hacerte feliz 🌹",
+    "Eres muy especial para mí 💖",
+    "Dame una oportunidad ✨"
+];
 
-            // Convertimos la foto a un archivo descargable (Base64)
-            let imageData = canvas.toDataURL('image/png');
-            
-            // Opcional: Esto descarga la foto automáticamente a tu computadora o servidor
-            let link = document.createElement('a');
-            link.download = 'foto_recuerdo_nayely.png';
-            link.href = imageData;
-            link.click();
-            
-            // Detenemos la cámara
-            let stream = video.srcObject;
-            let tracks = stream.getTracks();
-            tracks.forEach(track => track.stop());
-        }
-    </script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const message = document.getElementById("message");
+
+let attempts = 0;
+let yesScale = 1;
+let noScale = 1;
+
+/* ==================================
+   BOTÓN NO
+================================== */
+
+noBtn.addEventListener("click", () => {
+
+    attempts++;
+
+    message.textContent =
+        phrases[Math.floor(Math.random()*phrases.length)];
+
+    yesScale += 0.15;
+    noScale -= 0.12;
+
+    if(noScale < 0.25){
+        noScale = 0.25;
+    }
+
+    yesBtn.style.transform = `scale(${yesScale})`;
+    noBtn.style.transform = `scale(${noScale})`;
+
+    // Después de varios intentos se mueve
+    if(attempts >= 4){
+
+        const maxX = window.innerWidth - noBtn.offsetWidth - 30;
+        const maxY = window.innerHeight - noBtn.offsetHeight - 30;
+
+        noBtn.style.position = "fixed";
+        noBtn.style.left = Math.random() * maxX + "px";
+        noBtn.style.top = Math.random() * maxY + "px";
+    }
+});
+
+/* ==================================
+   BOTÓN SÍ
+================================== */
+
+yesBtn.addEventListener("click", () => {
+
+    document.querySelector(".card").innerHTML = `
+        <h1 class="title">❤️ ¡Gracias! ❤️</h1>
+
+        <div style="
+            font-size:1.5rem;
+            margin-top:20px;
+            line-height:1.8;
+        ">
+            ¡Gracias por aceptar, Nayely! ❤️<br>
+            Hoy comienza una historia muy bonita.
+        </div>
+    `;
+
+    createHeartExplosion();
+    createCelebration();
+});
+
+/* ==================================
+   CORAZONES
+================================== */
+
+function createHeartExplosion(){
+
+    for(let i=0;i<120;i++){
+
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
+
+        heart.style.left =
+            Math.random()*window.innerWidth+"px";
+
+        heart.style.bottom = "0px";
+
+        heart.style.fontSize =
+            (15 + Math.random()*30)+"px";
+
+        document.body.appendChild(heart);
+
+        setTimeout(()=>{
+            heart.remove();
+        },4000);
+    }
+}
+
+/* ==================================
+   CELEBRACIÓN VISUAL
+================================== */
+
+function createCelebration(){
+
+    const container =
+        document.getElementById("celebration");
+
+    const colors = [
+        "#ff4d88",
+        "#ffd700",
+        "#ffffff",
+        "#ff99bb",
+        "#ff6b6b"
+    ];
+
+    for(let i=0;i<200;i++){
+
+        const spark =
+            document.createElement("div");
+
+        spark.classList.add("spark");
+
+        spark.style.background =
+            colors[Math.floor(Math.random()*colors.length)];
+
+        spark.style.left =
+            window.innerWidth/2 + "px";
+
+        spark.style.top =
+            window.innerHeight/2 + "px";
+
+        spark.style.setProperty(
+            "--x",
+            (Math.random()*1000-500)+"px"
+        );
+
+        spark.style.setProperty(
+            "--y",
+            (Math.random()*1000-500)+"px"
+        );
+
+        container.appendChild(spark);
+
+        setTimeout(()=>{
+            spark.remove();
+        },2000);
+    }
+}
+
+/* ==================================
+   PÉTALOS CAYENDO
+================================== */
+
+function createPetal(){
+
+    const petal =
+        document.createElement("div");
+
+    petal.classList.add("petal");
+    petal.innerHTML = "🌸";
+
+    petal.style.left =
+        Math.random()*100+"vw";
+
+    petal.style.animationDuration =
+        (6 + Math.random()*8)+"s";
+
+    petal.style.opacity =
+        Math.random();
+
+    petal.style.fontSize =
+        (15 + Math.random()*15)+"px";
+
+    document.body.appendChild(petal);
+
+    setTimeout(()=>{
+        petal.remove();
+    },15000);
+}
+
+setInterval(createPetal, 300);
+
+</script>
+
 </body>
 </html>
